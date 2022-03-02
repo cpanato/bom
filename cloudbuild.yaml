@@ -7,7 +7,7 @@ steps:
     dir: "go/src/sigs.k8s.io"
     args:
     - "clone"
-    - "https://github.com/kubernetes-sigs/bom"
+    - "https://github.com/cpanato/bom"
 
   - name: gcr.io/cloud-builders/git
     entrypoint: "bash"
