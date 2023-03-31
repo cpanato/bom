@@ -10,8 +10,8 @@ before:
     - go mod tidy
     - /bin/bash -c 'if [ -n "$(git --no-pager diff --exit-code go.mod go.sum)" ]; then exit 1; fi'
 
-gomod:
-  proxy: true
+# gomod:
+#   proxy: true
 
 builds:
   - id: bom
@@ -46,7 +46,7 @@ builds:
 
 archives:
   - format: binary
-    name_template: bom-{{ .Version }}-{{ .Arch }}-{{ .Os }}
+    name_template: bom-{{ .Arch }}-{{ .Os }}
     allow_different_binary_count: true
 
 signs:
@@ -83,7 +83,7 @@ snapshot:
 
 release:
   github:
-    owner: kubernetes-sigs
+    owner: cpanato
     name: bom
   prerelease: auto
 
