@@ -18,18 +18,18 @@ jobs:
 
     steps:
       - name: Check out code
-        uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
+        uses: actions/checkout@44c2b7a8a4ea60a981eaca3cf939b5f4305c123b # v4.1.5
 
-      - uses: actions/setup-go@0c52d547c9bc32b1aa3301fd7a9cb496313a4491 # v5.0.0
+      - uses: actions/setup-go@cdcb36043654635271a94b9a6d1392de5bb323a7 # v5.0.1
         with:
           go-version: '1.22'
           check-latest: true
 
       - name: Install cosign
-        uses: sigstore/cosign-installer@e1523de7571e31dbe865fd2e80c5c7c23ae71eb4 # v3.4.0
+        uses: sigstore/cosign-installer@59acb6260d9c0ba8f4a2f9d9b48431a222b68e20 # v3.5.0
 
       - name: Install GoReleaser
-        uses: goreleaser/goreleaser-action@7ec5c2b0c6cdda6e8bbb49444bc797dd33d74dd8 # v5.0.0
+        uses: goreleaser/goreleaser-action@5742e2a039330cbb23ebf35f046f814d4c6ff811 # v5.1.0
         with:
           install-only: true
 
@@ -53,20 +53,20 @@ jobs:
 
     steps:
       - name: Check out code
-        uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
+        uses: actions/checkout@44c2b7a8a4ea60a981eaca3cf939b5f4305c123b # v4.1.5
 
       - name: Set tag output
         id: tag
         run: echo "tag_name=${GITHUB_REF#refs/*/}" >> "$GITHUB_OUTPUT"
 
       - name: Install tejolote
-        uses: kubernetes-sigs/release-actions/setup-tejolote@841d76a188a7c121231a863572e27012805715a2 # v0.1.4
+        uses: kubernetes-sigs/release-actions/setup-tejolote@2f8b9ec22aedc9ce15039b6c7716aa6c2907df1c # v0.2.0
 
       - run: |
           tejolote attest --artifacts github://kubernetes-sigs/bom/${{ steps.tag.outputs.tag_name }} github://kubernetes-sigs/bom/"${GITHUB_RUN_ID}" --output bom.intoto.json --sign
 
       - name: Release
-        uses: softprops/action-gh-release@9d7c94cfd0a1f3ed45544c887983e9fa900f0564 # v0.1.15
+        uses: softprops/action-gh-release@69320dbe05506a9a39fc8ae11030b214ec2d1f87 # v0.1.15
         with:
           files: bom.intoto.json
           tag_name: "${{ steps.tag.outputs.tag_name }}"
